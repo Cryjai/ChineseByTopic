@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>DSE 中文閱讀卷 · 題型練習與答題框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans TC', 'PingFang HK', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: #f4f7fb;
+            color: #1e2a3e;
+            line-height: 1.5;
+            padding: 24px 20px;
+        }
+
+        /* 整體容器 */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 頂部導航/標題 */
+        .header {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e9edf2;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f4870, #2a6f8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .sub {
+            color: #5a6e7c;
+            margin-top: 8px;
+            font-size: 0.95rem;
+            border-left: 3px solid #3b82b6;
+            padding-left: 14px;
+        }
+
+        /* 雙欄布局：左邊練習區，右邊筆記區 (手機版堆疊) */
+        .two-columns {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .practice-area {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .notes-area {
+            flex: 1.2;
+            min-width: 260px;
+            background: #ffffffdb;
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 20px;
+            background: white;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.03);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        /* 卡片通用樣式 */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid #eef2f8;
+            transition: all 0.2s;
+        }
+
+        /* 題型分類標籤 */
+        .type-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .type-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .type-btn.active {
+            background: #1f4870;
+            color: white;
+            box-shadow: 0 4px 10px rgba(31,72,112,0.2);
+        }
+
+        .mode-switch {
+            display: flex;
+            gap: 15px;
+            margin: 16px 0 12px;
+            align-items: center;
+        }
+
+        .mode-btn {
+            background: #eef2ff;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .mode-btn.active-mode {
+            background: #2c6e9e;
+            color: white;
+        }
+
+        /* 題目區 */
+        .passage {
+            background: #fefef7;
+            padding: 18px;
+            border-radius: 20px;
+            margin: 16px 0;
+            border-left: 5px solid #3b82b6;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #2d3e50;
+        }
+
+        .question-item {
+            margin: 24px 0 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #e2edf2;
+        }
+
+        .q-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #cfdfed;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            background: #ffffff;
+        }
+
+        .check-btn {
+            background: #e6f0fa;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            background: #f8fafc;
+        }
+
+        .feedback.correct {
+            background: #e0f2e9;
+            color: #1f6e43;
+        }
+
+        .feedback.wrong {
+            background: #ffe6e5;
+            color: #b91c1c;
+        }
+
+        /* 筆記區樣式 */
+        .notes-section {
+            margin-bottom: 28px;
+        }
+
+        .notes-section h3 {
+            font-size: 1.2rem;
+            border-left: 4px solid #3b82b6;
+            padding-left: 12px;
+            margin-bottom: 16px;
+        }
+
+        .note-block {
+            background: #f9fbfd;
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #e9edf2;
+        }
+
+        .note-block strong {
+            color: #1f4870;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .pattern-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pattern-list li {
+            margin-bottom: 10px;
+            padding-left: 12px;
+            border-left: 2px solid #b9d0e8;
+        }
+
+        hr {
+            margin: 20px 0;
+            border-color: #e2edf2;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: #6c86a3;
+        }
+        @media (max-width: 800px) {
+            .notes-area {
+                position: static;
+                margin-top: 20px;
+            }
+            body {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <h1>📖 中文閱讀卷 · 題型實戰工坊</h1>
+        <div class="sub">根據考評局考核點設計｜白話文言長問答｜即時對答案 + 答題框架筆記</div>
+    </div>
+
+    <div class="two-columns">
+        <!-- 左：練習主區 -->
+        <div class="practice-area">
+            <div class="card">
+                <div class="type-tabs" id="typeTabs">
+                    <button class="type-btn active" data-type="all">📌 全部題型</button>
+                    <button class="type-btn" data-type="主旨感悟">🌟 主旨・感悟</button>
+                    <button class="type-btn" data-type="手法作用">✍️ 手法・作用</button>
+                    <button class="type-btn" data-type="段落結構">📐 段落・結構</button>
+                    <button class="type-btn" data-type="比較評價">⚖️ 比較・評價</button>
+                    <button class="type-btn" data-type="綜合全文">🔍 綜合全文</button>
+                </div>
+                <div class="mode-switch">
+                    <span style="font-size:0.85rem;">📌 模式：</span>
+                    <button class="mode-btn active-mode" data-mode="single">✏️ 按題型練習</button>
+                    <button class="mode-btn" data-mode="fullpaper">📄 模擬綜合卷 (4題混搭)</button>
+                </div>
+                <div id="exerciseContainer">
+                    <!-- 動態載入題目 -->
+                    <div style="text-align:center; padding:40px;">載入題庫中⋯⋯</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右：答題筆記＋框架（你之前整理的答題公式） -->
+        <div class="notes-area">
+            <h2 style="font-size:1.4rem; margin-bottom:12px;">📚 答題框架筆記</h2>
+            <div class="notes-section">
+                <h3>🎯 修辭手法・作用速查</h3>
+                <div class="note-block"><strong>比喻</strong> 生動形象地寫出____特點，令讀者更具體感受____。</div>
+                <div class="note-block"><strong>擬人</strong> 賦予事物人的情感，親切自然，突出____。</div>
+                <div class="note-block"><strong>對比</strong> 突出強調AB差異，深化主旨/情感。</div>
+                <div class="note-block"><strong>象徵</strong> 含蓄深刻，以____象徵____，寄寓____。</div>
+                <div class="note-block"><strong>排比</strong> 增強語勢，層層遞進，強化情感。</div>
+            </div>
+            <div class="notes-section">
+                <h3>🧩 段落作用三維法</h3>
+                <ul class="pattern-list">
+                    <li><strong>內容上</strong>：交代背景／刻畫形象／抒發情感</li>
+                    <li><strong>結構上</strong>：承上啟下／總結上文／總領全文／前後呼應</li>
+                    <li><strong>主題上</strong>：點明主旨／深化主題／暗示寓意</li>
+                </ul>
+            </div>
+            <div class="notes-section">
+                <h3>💡 主旨・感悟萬用公式</h3>
+                <div class="note-block">「本文通過記述____，表達了____（核心思想），從____中領悟到人生應____（四大母題關鍵詞：人間溫情／自然循環／超越得失／珍惜當下）。」</div>
+            </div>
+            <div class="notes-section">
+                <h3>📌 綜合全文三步驟</h3>
+                <ul class="pattern-list">
+                    <li>① 定位關鍵段落（開頭／結尾／中心句）</li>
+                    <li>② 提煉要點，分層歸納（起初→後來→最後）</li>
+                    <li>③ 扣題組織：觀點＋文本證據＋分析</li>
+                </ul>
+            </div>
+            <div class="notes-section">
+                <h3>⚖️ 比較兩篇／評價題</h3>
+                <div class="note-block">「從（手法／主旨）來看，A文通過____，B文則____。我認為A更優，因為____。」</div>
+            </div>
+            <hr>
+            <div style="font-size:0.8rem; color:#4f6f8f;">✨ 點擊「核對答案」即可參考標準答案 + 解析，框架筆記隨時對照。</div>
+        </div>
+    </div>
+    <footer>模擬題目根據歷屆DSE白話文／文言文趨勢編寫，適用乙部長問答練習。</footer>
+</div>
+
+<script>
+    // ----------------------------- 題庫 (參考 DSE 常見長問答類型)
+    const questionBank = [
+        // 主旨感悟類
+        { id: 1, type: "主旨感悟", passage: "巷子裡，鄰居老太太佝僂行過，蝴蝶飛過，蒼蠅來過，貓影子飄過。千百個念頭閃過，沒有一輛車經過。時間行走其中，百轉千迴失去了影子。", question: "作者在末段說：「我們坐在那兒看它，彷彿看見人生。」她對人生有何領悟？試加以說明。", modelAnswer: "作者領悟到人生應以從容自在的心境面對急促與變幻；當心不被外物所擾，時間的壓迫感便會消失，才能活得淡然自適。", analysis: "扣連「沒有一輛車經過」象徵擺脫城市壓迫，念頭閃過卻不執著，體現超越得失、心境自在。" },
+        { id: 2, type: "主旨感悟", passage: "父親在南洋打仗，叢林中時常讓他思鄉落淚的不是珍寶，只是普普通通的紅心番薯。它烤炙過的香味，穿過烽火，溫暖了一位年輕戰士的心。", question: "綜合全文（根據節錄），番薯對父親有何意義？帶出怎樣的人生感悟？", modelAnswer: "番薯象徵故鄉情懷與生存的寄託；從中體悟到即使身處苦難，微小熟悉的事物也能成為心靈的支撐，體現人間溫情與生命韌性。", analysis: "歸入母題一及二：鄉土之愛與苦難中的慰藉。" },
+        // 手法作用類
+        { id: 3, type: "手法作用", passage: "窪坑裏隔夜的雨水，像一段委屈的心事，淚汪汪悶壞了，陰着臉，映着來人，踩着了它，就回濺你一腳的怨意。", question: "這段文字運用了什麼修辭手法？有何作用？", modelAnswer: "運用了比喻和擬人手法。將雨水比作「委屈的心事」，賦予其「淚汪汪」「陰着臉」等情感，生動形象地刻畫巷子的陰鬱潮濕，含蓄表達身處其中的抑鬱孤獨。", analysis: "比喻使畫面具體，擬人將情感投射景物，感染力強。" },
+        { id: 4, type: "手法作用", passage: "火車駛出隧道，我看見了那寂寥的平交道欄杆後，三個紅臉蛋的男孩子並肩站在一起。姑娘伸開生着凍瘡的手，使勁擺動，金黃色的橘子從窗口朝孩子們頭上落下去。", question: "作者刻意描寫「橘子」的顏色與拋擲的動作，有何用意？", modelAnswer: "金黃橘子象徵溫暖與希望，拋擲的動作表現姑娘深摯的親情，與前文灰暗的景物形成對比，突出人性美善能短暫照亮庸碌人生，深化主題。", analysis: "象徵手法＋對比，凸顯主旨。" },
+        // 段落結構類
+        { id: 5, type: "段落結構", passage: "（節錄）第2段描寫村中寂寥景象；第3段補充小村歷史——最初為糖廠工人聚居，經歷火災水患，如今蔗糖產業式微；第4-5段作者與朋友唱歌，旋律滄桑。", question: "第3段在文中有何作用？可否刪去？", modelAnswer: "不可刪。內容上交代村落由盛轉衰的歷史背景；結構上承接上文寂寥景象，為下文唱歌抒懷提供情感基礎；主題上深化時代變遷的無奈，令主旨更深刻。", analysis: "從內容、結構、主題三維答題，得分完整。" },
+        { id: 6, type: "段落結構", passage: "開頭描寫火車站陰沉、不見送行的人，小狗哀叫。結尾再次呼應「聊以忘卻那無法形容的疲勞和倦怠」。", question: "文章開頭與結尾有何關聯？這樣安排有何效果？", modelAnswer: "首尾呼應。開頭以陰鬱景色奠定壓抑基調，結尾再次提及疲勞倦怠但已獲得暫且的忘卻，結構嚴謹完整，凸顯心境由苦悶轉為被溫情短暫療癒的變化。", analysis: "結構作用＋情感對比。" },
+        // 比較評價類
+        { id: 7, type: "比較評價", passage: "甲文《聰明人和傻子和奴才》藉寓言諷刺社會階層；乙文《談教訓》以幽默反語諷刺假道學。", question: "你認為哪一篇的諷刺效果更佳？試比較說明。", modelAnswer: "我認為甲文諷刺更尖銳深刻。甲文透過鮮明角色（奴才、聰明人、傻子）直接呈現社會劣根性，讀者自行體會，入木三分；乙文雖幽默風趣，但諷刺對象較單一，力量稍遜。", analysis: "比較點：諷刺手法與力度，立場明確＋文本對比。" },
+        { id: 8, type: "比較評價", passage: "王若虛評張巡許遠：「忠矣，然而未仁。食人之罪萬劫不能減。」另一觀點認為「為國何害」。", question: "你比較認同王若虛還是辯解者的觀點？為甚麼？", modelAnswer: "較認同王若虛。因為天下只有一個「是」，食人本身違背仁道，無論動機如何皆不可抵銷；若以「為國」合理化殘忍，將動搖道德根本，王說更具倫理深度。", analysis: "結合文本與價值判斷。" },
+        // 綜合全文類
+        { id: 9, type: "綜合全文", passage: "全文從城市長巷的壓迫，到城郊自然永恆對比，最後走進鄉下小巷感受悠閒，並以「沒有一輛車經過」作結。", question: "綜合全文，作者透過巷子之旅想傳達甚麼人生態度？", modelAnswer: "作者藉不同巷子的體驗，傳達人應從急促壓迫的生活中抽離，以不執著的心境順應自然節奏，才能活得從容自在。由城市到鄉村，象徵心靈從束縛走向自由。", analysis: "結構脈絡→主旨歸納，點出空間轉移對應心境變化。" },
+        { id: 10, type: "綜合全文", passage: "文中描述父親為弟妹放棄學業、晚年創業失敗、獨坐藤椅沉默寡言；最後媳婦理解他的孤獨。", question: "綜合全文，你認為父親「孤獨的理由」是甚麼？", modelAnswer: "孤獨源於人生角色的失落與不善表達。年輕時為家人犧牲理想，晚年失去目標又因自尊封閉自己；雖渴望親情卻不知如何連結，最終孤獨成為基調。", analysis: "整合人物經歷＋性格特質。" }
+    ];
+
+    let currentMode = "single";     // single / fullpaper
+    let currentType = "all";
+    let currentQuestions = [];      // 儲存當前顯示的題目列表
+
+    // DOM 元素
+    const exerciseContainer = document.getElementById("exerciseContainer");
+    const typeBtns = document.querySelectorAll(".type-btn");
+    const modeBtns = document.querySelectorAll(".mode-btn");
+
+    // 過濾題目
+    function filterQuestionsByType(type, limit = null) {
+        let filtered = [...questionBank];
+        if (type !== "all") {
+            filtered = filtered.filter(q => q.type === type);
+        }
+        if (limit && limit > 0 && currentMode === "fullpaper") {
+            // 模擬綜合卷: 隨機抽4題 (盡量不重複類型，使練習全面)
+            const shuffled = [...filtered];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, limit);
+        }
+        return filtered;
+    }
+
+    // 儲存每題的用戶答案 & 反饋狀態 (用 id)
+    let userAnswers = {};
+    let feedbackState = {};
+
+    // 渲染當前題目
+    function renderExercises() {
+        if (!exerciseContainer) return;
+        let questionsToRender = [];
+        if (currentMode === "single") {
+            questionsToRender = filterQuestionsByType(currentType);
+        } else {
+            // 綜合卷模式 固定取 4 題混合 (盡量包含多種題型)
+            questionsToRender = filterQuestionsByType("all", 4);
+            if (questionsToRender.length < 4) {
+                // 若不足就補齊
+                const extra = [...questionBank].filter(q => !questionsToRender.includes(q));
+                while(questionsToRender.length < 4 && extra.length) {
+                    questionsToRender.push(extra.shift());
+                }
+            }
+        }
+        currentQuestions = questionsToRender;
+
+        if (!currentQuestions.length) {
+            exerciseContainer.innerHTML = `<div class="card" style="text-align:center;">✨ 沒有相關題型，試試其他分類～</div>`;
+            return;
+        }
+
+        let html = `<div style="margin-bottom:12px;"><span style="background:#eef2ff; padding:4px 12px; border-radius:30px;">📌 共 ${currentQuestions.length} 題 | ${currentMode === 'single' ? '按題型練習' : '綜合模擬卷'}</span></div>`;
+        currentQuestions.forEach((q, idx) => {
+            const savedAnswer = userAnswers[q.id] || "";
+            const fb = feedbackState[q.id];
+            let fbHtml = "";
+            if (fb) {
+                const cls = fb.isCorrect ? "correct" : "wrong";
+                fbHtml = `<div class="feedback ${cls}">📌 ${fb.message}<br>📖 ${fb.analysis || ""}</div>`;
+            }
+            html += `
+                <div class="question-item" data-qid="${q.id}">
+                    <div class="q-title">🔖 題型：${q.type}</div>
+                    <div class="passage">${q.passage}</div>
+                    <div><strong>✍️ 題目：</strong> ${q.question}</div>
+                    <textarea class="answer-input" rows="3" data-id="${q.id}" placeholder="請輸入你的答案（可參考右邊筆記框架）...">${escapeHtml(savedAnswer)}</textarea>
+                    <div><button class="check-btn" data-id="${q.id}" data-model="${escapeHtml(q.modelAnswer)}" data-analysis="${escapeHtml(q.analysis)}">✅ 核對答案</button></div>
+                    ${fbHtml}
+                </div>
+            `;
+        });
+        exerciseContainer.innerHTML = html;
+
+        // 綁定 input 儲存事件
+        document.querySelectorAll(".answer-input").forEach(textarea => {
+            const qid = parseInt(textarea.getAttribute("data-id"));
+            textarea.addEventListener("input", (e) => {
+                userAnswers[qid] = e.target.value;
+            });
+        });
+        // 綁定核對按鈕
+        document.querySelectorAll(".check-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const qid = parseInt(btn.getAttribute("data-id"));
+                const modelAnswerRaw = btn.getAttribute("data-model");
+                const analysisRaw = btn.getAttribute("data-analysis");
+                const userAnswer = userAnswers[qid] || "";
+                const questionObj = currentQuestions.find(q => q.id === qid);
+                const modelAnswer = modelAnswerRaw || (questionObj ? questionObj.modelAnswer : "");
+                const analysisText = analysisRaw || (questionObj ? questionObj.analysis : "建議對照答題框架，強調要點即可。");
+                
+                // 簡單比對邏輯： 只要用戶答案包含參考答案中的關鍵概念或大致語意相近 (可用閾值)
+                const isCorrect = fuzzyCheck(userAnswer, modelAnswer);
+                const feedbackMsg = isCorrect ? "✓ 答案方向正確！可對照參考要點。" : "⚠️ 可再參考答題框架，試着扣緊文本＋手法/主旨三步曲。";
+                feedbackState[qid] = {
+                    isCorrect: isCorrect,
+                    message: feedbackMsg,
+                    analysis: `📌 參考答案：${modelAnswer}。${analysisText}`
+                };
+                renderExercises();  // 重新渲染刷新反饋
+            });
+        });
+    }
+
+    // 模糊比對 (不刁難，識別關鍵詞群)
+    function fuzzyCheck(user, model) {
+        if (!user || user.trim() === "") return false;
+        const lowerUser = user.toLowerCase();
+        // 提取參考答案中的關鍵詞 (長度>1的實詞)
+        const keywords = extractKeywords(model);
+        let matchCount = 0;
+        for (let kw of keywords) {
+            if (lowerUser.includes(kw.toLowerCase())) matchCount++;
+        }
+        // 若匹配超過 40% 關鍵詞 或 包含核心概念
+        if (keywords.length === 0) return lowerUser.length > 5;
+        return (matchCount / keywords.length) >= 0.35;
+    }
+
+    function extractKeywords(text) {
+        // 移除標點，提取常用詞組 (2-5字左右)
+        const cleaned = text.replace(/[，,。？?！!；;：、“”‘’]/g, ' ');
+        const words = cleaned.split(/\s+/);
+        const candidates = words.filter(w => w.length >= 2 && !['作者','文章','文中','說明','什麼','為何','如何','可以','就是','一個'].includes(w));
+        // 去重並限制數量
+        return [...new Set(candidates)].slice(0, 7);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 切換分類
+    function setActiveType(type) {
+        currentType = type;
+        if (currentMode === "single") {
+            renderExercises();
+        } else {
+            // 綜合卷模式若切換分類，重新抽題
+            renderExercises();
+        }
+        typeBtns.forEach(btn => {
+            const val = btn.getAttribute("data-type");
+            if (val === type) btn.classList.add("active");
+            else btn.classList.remove("active");
+        });
+    }
+
+    function setMode(mode) {
+        currentMode = mode;
+        modeBtns.forEach(btn => {
+            const m = btn.getAttribute("data-mode");
+            if (m === mode) btn.classList.add("active-mode");
+            else btn.classList.remove("active-mode");
+        });
+        // 重置答案儲存區 (可保留但要避免干擾，建議保留但刷新顯示)
+        // 不清userAnswers但重新渲染時答案依然在，但綜合卷切換後題目會變動，保留舊id無傷大雅
+        renderExercises();
+    }
+
+    // 事件綁定
+    typeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const type = btn.getAttribute("data-type");
+            setActiveType(type);
+        });
+    });
+    modeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const mode = btn.getAttribute("data-mode");
+            setMode(mode);
+        });
+    });
+
+    // 初始化
+    renderExercises();
+</script>
+</body>
+</html>
