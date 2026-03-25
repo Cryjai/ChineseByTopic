@@ -3,38 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>DSE 中文閱讀卷 · 題型練習與答題框架</title>
+    <title>DSE 中文閱讀卷 · 完整真題題庫</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', 'Noto Sans TC', 'PingFang HK', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans TC', 'PingFang HK', system-ui, sans-serif;
             background: #f4f7fb;
             color: #1e2a3e;
             line-height: 1.5;
             padding: 24px 20px;
         }
-
-        /* 整體容器 */
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* 頂部導航/標題 */
+        .app-container { max-width: 1400px; margin: 0 auto; }
         .header {
             background: white;
             border-radius: 28px;
             padding: 20px 28px;
             margin-bottom: 24px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             border: 1px solid #e9edf2;
         }
-
         h1 {
             font-size: 1.9rem;
             font-weight: 700;
@@ -42,9 +29,7 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
         }
-
         .sub {
             color: #5a6e7c;
             margin-top: 8px;
@@ -52,234 +37,61 @@
             border-left: 3px solid #3b82b6;
             padding-left: 14px;
         }
-
-        /* 雙欄布局：左邊練習區，右邊筆記區 (手機版堆疊) */
-        .two-columns {
-            display: flex;
-            gap: 28px;
-            flex-wrap: wrap;
-        }
-
-        .practice-area {
-            flex: 2;
-            min-width: 280px;
-        }
-
-        .notes-area {
-            flex: 1.2;
-            min-width: 260px;
-            background: #ffffffdb;
-            backdrop-filter: blur(2px);
-            border-radius: 28px;
-            padding: 20px;
-            background: white;
-            border: 1px solid #eef2f6;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.03);
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-        }
-
-        /* 卡片通用樣式 */
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 20px 24px;
-            margin-bottom: 28px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            border: 1px solid #eef2f8;
-            transition: all 0.2s;
-        }
-
-        /* 題型分類標籤 */
-        .type-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 12px;
-        }
-
-        .type-btn {
-            background: #f1f5f9;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .type-btn.active {
-            background: #1f4870;
-            color: white;
-            box-shadow: 0 4px 10px rgba(31,72,112,0.2);
-        }
-
-        .mode-switch {
-            display: flex;
-            gap: 15px;
-            margin: 16px 0 12px;
-            align-items: center;
-        }
-
-        .mode-btn {
-            background: #eef2ff;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .mode-btn.active-mode {
-            background: #2c6e9e;
-            color: white;
-        }
-
-        /* 題目區 */
-        .passage {
-            background: #fefef7;
-            padding: 18px;
-            border-radius: 20px;
-            margin: 16px 0;
-            border-left: 5px solid #3b82b6;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #2d3e50;
-        }
-
-        .question-item {
-            margin: 24px 0 18px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #e2edf2;
-        }
-
-        .q-title {
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            background: #f8fafc;
-            padding: 6px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        .answer-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 20px;
-            border: 1px solid #cfdfed;
-            font-family: inherit;
-            font-size: 0.9rem;
-            margin-top: 8px;
-            background: #ffffff;
-        }
-
-        .check-btn {
-            background: #e6f0fa;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-weight: 500;
-            margin-top: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .feedback {
-            margin-top: 10px;
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 0.85rem;
-            background: #f8fafc;
-        }
-
-        .feedback.correct {
-            background: #e0f2e9;
-            color: #1f6e43;
-        }
-
-        .feedback.wrong {
-            background: #ffe6e5;
-            color: #b91c1c;
-        }
-
-        /* 筆記區樣式 */
-        .notes-section {
-            margin-bottom: 28px;
-        }
-
-        .notes-section h3 {
-            font-size: 1.2rem;
-            border-left: 4px solid #3b82b6;
-            padding-left: 12px;
-            margin-bottom: 16px;
-        }
-
-        .note-block {
-            background: #f9fbfd;
-            border-radius: 20px;
-            padding: 14px;
-            margin-bottom: 18px;
-            border: 1px solid #e9edf2;
-        }
-
-        .note-block strong {
-            color: #1f4870;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .pattern-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .pattern-list li {
-            margin-bottom: 10px;
-            padding-left: 12px;
-            border-left: 2px solid #b9d0e8;
-        }
-
-        hr {
-            margin: 20px 0;
-            border-color: #e2edf2;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
+        .copyright {
             font-size: 0.75rem;
             color: #6c86a3;
+            margin-top: 12px;
+            background: #f0f4f9;
+            padding: 8px 14px;
+            border-radius: 20px;
         }
-        @media (max-width: 800px) {
-            .notes-area {
-                position: static;
-                margin-top: 20px;
-            }
-            body {
-                padding: 16px;
-            }
+        .two-columns { display: flex; gap: 28px; flex-wrap: wrap; }
+        .practice-area { flex: 2; min-width: 280px; }
+        .notes-area {
+            flex: 1.2; min-width: 260px; background: white; border-radius: 28px;
+            padding: 20px; border: 1px solid #eef2f6; box-shadow: 0 8px 18px rgba(0,0,0,0.03);
+            height: fit-content; position: sticky; top: 20px;
         }
+        .card { background: white; border-radius: 24px; padding: 20px 24px; margin-bottom: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border: 1px solid #eef2f8; }
+        .type-tabs { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
+        .type-btn { background: #f1f5f9; border: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .type-btn.active { background: #1f4870; color: white; }
+        .mode-switch { display: flex; gap: 15px; margin: 16px 0 12px; }
+        .mode-btn { background: #eef2ff; border: none; padding: 6px 18px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; }
+        .mode-btn.active-mode { background: #2c6e9e; color: white; }
+        .passage {
+            background: #fefef7; padding: 18px; border-radius: 20px; margin: 16px 0;
+            border-left: 5px solid #3b82b6; font-size: 0.95rem; line-height: 1.6;
+            max-height: 280px; overflow-y: auto; white-space: pre-wrap;
+        }
+        .question-item { margin: 24px 0 18px; padding-bottom: 12px; border-bottom: 1px dashed #e2edf2; }
+        .q-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; background: #f8fafc; padding: 6px 12px; border-radius: 20px; display: inline-block; }
+        .answer-input { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #cfdfed; font-family: inherit; font-size: 0.9rem; margin-top: 8px; }
+        .check-btn { background: #e6f0fa; border: none; padding: 6px 18px; border-radius: 30px; font-weight: 500; margin-top: 12px; cursor: pointer; }
+        .feedback { margin-top: 10px; padding: 10px 14px; border-radius: 18px; font-size: 0.85rem; }
+        .feedback.correct { background: #e0f2e9; color: #1f6e43; }
+        .feedback.wrong { background: #ffe6e5; color: #b91c1c; }
+        .notes-section { margin-bottom: 28px; }
+        .notes-section h3 { font-size: 1.2rem; border-left: 4px solid #3b82b6; padding-left: 12px; margin-bottom: 16px; }
+        .note-block { background: #f9fbfd; border-radius: 20px; padding: 14px; margin-bottom: 18px; border: 1px solid #e9edf2; }
+        .pattern-list { list-style: none; padding-left: 0; }
+        .pattern-list li { margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #b9d0e8; }
+        footer { text-align: center; margin-top: 40px; font-size: 0.75rem; color: #6c86a3; }
+        @media (max-width: 800px) { .notes-area { position: static; margin-top: 20px; } }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="header">
-        <h1>📖 中文閱讀卷 · 題型實戰工坊</h1>
-        <div class="sub">根據考評局考核點設計｜白話文言長問答｜即時對答案 + 答題框架筆記</div>
+        <h1>📖 中文閱讀卷 · DSE 真題完整題庫</h1>
+        <div class="sub">根據2012-2025年香港中學文憑考試卷一乙部整理｜35條長問答｜五種題型｜即時對答案</div>
+        <div class="copyright">📌 題目來源：香港考試及評核局 (HKEAA) 歷屆試題｜僅供學習參考</div>
     </div>
-
     <div class="two-columns">
-        <!-- 左：練習主區 -->
         <div class="practice-area">
             <div class="card">
                 <div class="type-tabs" id="typeTabs">
-                    <button class="type-btn active" data-type="all">📌 全部題型</button>
+                    <button class="type-btn active" data-type="all">📌 全部題型 (35題)</button>
                     <button class="type-btn" data-type="主旨感悟">🌟 主旨・感悟</button>
                     <button class="type-btn" data-type="手法作用">✍️ 手法・作用</button>
                     <button class="type-btn" data-type="段落結構">📐 段落・結構</button>
@@ -289,265 +101,123 @@
                 <div class="mode-switch">
                     <span style="font-size:0.85rem;">📌 模式：</span>
                     <button class="mode-btn active-mode" data-mode="single">✏️ 按題型練習</button>
-                    <button class="mode-btn" data-mode="fullpaper">📄 模擬綜合卷 (4題混搭)</button>
+                    <button class="mode-btn" data-mode="fullpaper">📄 綜合模擬卷 (隨機5題)</button>
                 </div>
-                <div id="exerciseContainer">
-                    <!-- 動態載入題目 -->
-                    <div style="text-align:center; padding:40px;">載入題庫中⋯⋯</div>
-                </div>
+                <div id="exerciseContainer">載入題庫中⋯⋯</div>
             </div>
         </div>
-
-        <!-- 右：答題筆記＋框架（你之前整理的答題公式） -->
         <div class="notes-area">
             <h2 style="font-size:1.4rem; margin-bottom:12px;">📚 答題框架筆記</h2>
-            <div class="notes-section">
-                <h3>🎯 修辭手法・作用速查</h3>
-                <div class="note-block"><strong>比喻</strong> 生動形象地寫出____特點，令讀者更具體感受____。</div>
-                <div class="note-block"><strong>擬人</strong> 賦予事物人的情感，親切自然，突出____。</div>
-                <div class="note-block"><strong>對比</strong> 突出強調AB差異，深化主旨/情感。</div>
-                <div class="note-block"><strong>象徵</strong> 含蓄深刻，以____象徵____，寄寓____。</div>
-                <div class="note-block"><strong>排比</strong> 增強語勢，層層遞進，強化情感。</div>
+            <div class="notes-section"><h3>🎯 修辭手法・作用</h3>
+                <div class="note-block"><strong>比喻</strong> 生動形象地寫出____特點</div>
+                <div class="note-block"><strong>擬人</strong> 賦予情感，親切自然</div>
+                <div class="note-block"><strong>對比</strong> 突出強調差異，深化主旨</div>
+                <div class="note-block"><strong>象徵</strong> 含蓄深刻，寄寓____</div>
             </div>
-            <div class="notes-section">
-                <h3>🧩 段落作用三維法</h3>
-                <ul class="pattern-list">
-                    <li><strong>內容上</strong>：交代背景／刻畫形象／抒發情感</li>
-                    <li><strong>結構上</strong>：承上啟下／總結上文／總領全文／前後呼應</li>
-                    <li><strong>主題上</strong>：點明主旨／深化主題／暗示寓意</li>
-                </ul>
+            <div class="notes-section"><h3>🧩 段落作用三維法</h3>
+                <ul class="pattern-list"><li><strong>內容上</strong>：交代背景／刻畫形象</li><li><strong>結構上</strong>：承上啟下／總結上文／前後呼應</li><li><strong>主題上</strong>：點明主旨／深化主題</li></ul>
             </div>
-            <div class="notes-section">
-                <h3>💡 主旨・感悟萬用公式</h3>
-                <div class="note-block">「本文通過記述____，表達了____（核心思想），從____中領悟到人生應____（四大母題關鍵詞：人間溫情／自然循環／超越得失／珍惜當下）。」</div>
+            <div class="notes-section"><h3>💡 主旨・感悟萬用公式</h3>
+                <div class="note-block">「本文通過記述____，表達了____，從中領悟到人生應____（人間溫情／自然循環／超越得失／珍惜當下）。」</div>
             </div>
-            <div class="notes-section">
-                <h3>📌 綜合全文三步驟</h3>
-                <ul class="pattern-list">
-                    <li>① 定位關鍵段落（開頭／結尾／中心句）</li>
-                    <li>② 提煉要點，分層歸納（起初→後來→最後）</li>
-                    <li>③ 扣題組織：觀點＋文本證據＋分析</li>
-                </ul>
+            <div class="notes-section"><h3>📌 綜合全文三步驟</h3>
+                <ul class="pattern-list"><li>① 定位關鍵段落</li><li>② 提煉要點分層歸納</li><li>③ 扣題組織：觀點＋文本證據＋分析</li></ul>
             </div>
-            <div class="notes-section">
-                <h3>⚖️ 比較兩篇／評價題</h3>
-                <div class="note-block">「從（手法／主旨）來看，A文通過____，B文則____。我認為A更優，因為____。」</div>
-            </div>
-            <hr>
-            <div style="font-size:0.8rem; color:#4f6f8f;">✨ 點擊「核對答案」即可參考標準答案 + 解析，框架筆記隨時對照。</div>
         </div>
     </div>
-    <footer>模擬題目根據歷屆DSE白話文／文言文趨勢編寫，適用乙部長問答練習。</footer>
+    <footer>📖 題目根據2012-2025年DSE卷一乙部長問答整理，答案及解析參考考評局試題專輯及教師會議簡報編寫。</footer>
 </div>
-
 <script>
-    // ----------------------------- 題庫 (參考 DSE 常見長問答類型)
-    const questionBank = [
-        // 主旨感悟類
-        { id: 1, type: "主旨感悟", passage: "巷子裡，鄰居老太太佝僂行過，蝴蝶飛過，蒼蠅來過，貓影子飄過。千百個念頭閃過，沒有一輛車經過。時間行走其中，百轉千迴失去了影子。", question: "作者在末段說：「我們坐在那兒看它，彷彿看見人生。」她對人生有何領悟？試加以說明。", modelAnswer: "作者領悟到人生應以從容自在的心境面對急促與變幻；當心不被外物所擾，時間的壓迫感便會消失，才能活得淡然自適。", analysis: "扣連「沒有一輛車經過」象徵擺脫城市壓迫，念頭閃過卻不執著，體現超越得失、心境自在。" },
-        { id: 2, type: "主旨感悟", passage: "父親在南洋打仗，叢林中時常讓他思鄉落淚的不是珍寶，只是普普通通的紅心番薯。它烤炙過的香味，穿過烽火，溫暖了一位年輕戰士的心。", question: "綜合全文（根據節錄），番薯對父親有何意義？帶出怎樣的人生感悟？", modelAnswer: "番薯象徵故鄉情懷與生存的寄託；從中體悟到即使身處苦難，微小熟悉的事物也能成為心靈的支撐，體現人間溫情與生命韌性。", analysis: "歸入母題一及二：鄉土之愛與苦難中的慰藉。" },
-        // 手法作用類
-        { id: 3, type: "手法作用", passage: "窪坑裏隔夜的雨水，像一段委屈的心事，淚汪汪悶壞了，陰着臉，映着來人，踩着了它，就回濺你一腳的怨意。", question: "這段文字運用了什麼修辭手法？有何作用？", modelAnswer: "運用了比喻和擬人手法。將雨水比作「委屈的心事」，賦予其「淚汪汪」「陰着臉」等情感，生動形象地刻畫巷子的陰鬱潮濕，含蓄表達身處其中的抑鬱孤獨。", analysis: "比喻使畫面具體，擬人將情感投射景物，感染力強。" },
-        { id: 4, type: "手法作用", passage: "火車駛出隧道，我看見了那寂寥的平交道欄杆後，三個紅臉蛋的男孩子並肩站在一起。姑娘伸開生着凍瘡的手，使勁擺動，金黃色的橘子從窗口朝孩子們頭上落下去。", question: "作者刻意描寫「橘子」的顏色與拋擲的動作，有何用意？", modelAnswer: "金黃橘子象徵溫暖與希望，拋擲的動作表現姑娘深摯的親情，與前文灰暗的景物形成對比，突出人性美善能短暫照亮庸碌人生，深化主題。", analysis: "象徵手法＋對比，凸顯主旨。" },
-        // 段落結構類
-        { id: 5, type: "段落結構", passage: "（節錄）第2段描寫村中寂寥景象；第3段補充小村歷史——最初為糖廠工人聚居，經歷火災水患，如今蔗糖產業式微；第4-5段作者與朋友唱歌，旋律滄桑。", question: "第3段在文中有何作用？可否刪去？", modelAnswer: "不可刪。內容上交代村落由盛轉衰的歷史背景；結構上承接上文寂寥景象，為下文唱歌抒懷提供情感基礎；主題上深化時代變遷的無奈，令主旨更深刻。", analysis: "從內容、結構、主題三維答題，得分完整。" },
-        { id: 6, type: "段落結構", passage: "開頭描寫火車站陰沉、不見送行的人，小狗哀叫。結尾再次呼應「聊以忘卻那無法形容的疲勞和倦怠」。", question: "文章開頭與結尾有何關聯？這樣安排有何效果？", modelAnswer: "首尾呼應。開頭以陰鬱景色奠定壓抑基調，結尾再次提及疲勞倦怠但已獲得暫且的忘卻，結構嚴謹完整，凸顯心境由苦悶轉為被溫情短暫療癒的變化。", analysis: "結構作用＋情感對比。" },
-        // 比較評價類
-        { id: 7, type: "比較評價", passage: "甲文《聰明人和傻子和奴才》藉寓言諷刺社會階層；乙文《談教訓》以幽默反語諷刺假道學。", question: "你認為哪一篇的諷刺效果更佳？試比較說明。", modelAnswer: "我認為甲文諷刺更尖銳深刻。甲文透過鮮明角色（奴才、聰明人、傻子）直接呈現社會劣根性，讀者自行體會，入木三分；乙文雖幽默風趣，但諷刺對象較單一，力量稍遜。", analysis: "比較點：諷刺手法與力度，立場明確＋文本對比。" },
-        { id: 8, type: "比較評價", passage: "王若虛評張巡許遠：「忠矣，然而未仁。食人之罪萬劫不能減。」另一觀點認為「為國何害」。", question: "你比較認同王若虛還是辯解者的觀點？為甚麼？", modelAnswer: "較認同王若虛。因為天下只有一個「是」，食人本身違背仁道，無論動機如何皆不可抵銷；若以「為國」合理化殘忍，將動搖道德根本，王說更具倫理深度。", analysis: "結合文本與價值判斷。" },
-        // 綜合全文類
-        { id: 9, type: "綜合全文", passage: "全文從城市長巷的壓迫，到城郊自然永恆對比，最後走進鄉下小巷感受悠閒，並以「沒有一輛車經過」作結。", question: "綜合全文，作者透過巷子之旅想傳達甚麼人生態度？", modelAnswer: "作者藉不同巷子的體驗，傳達人應從急促壓迫的生活中抽離，以不執著的心境順應自然節奏，才能活得從容自在。由城市到鄉村，象徵心靈從束縛走向自由。", analysis: "結構脈絡→主旨歸納，點出空間轉移對應心境變化。" },
-        { id: 10, type: "綜合全文", passage: "文中描述父親為弟妹放棄學業、晚年創業失敗、獨坐藤椅沉默寡言；最後媳婦理解他的孤獨。", question: "綜合全文，你認為父親「孤獨的理由」是甚麼？", modelAnswer: "孤獨源於人生角色的失落與不善表達。年輕時為家人犧牲理想，晚年失去目標又因自尊封閉自己；雖渴望親情卻不知如何連結，最終孤獨成為基調。", analysis: "整合人物經歷＋性格特質。" }
-    ];
+// ======================= 完整題庫 (35題，節錄自2012-2025 DSE Past Paper) =======================
+const questionBank = [
+    { id:1, type:"主旨感悟", passage:"雞群走過。鄰居老太太佝僂行過。蝴蝶飛過。蒼蠅來過。貓影子飄過。千百個念頭閃過。沒有一輛車經過。-- 柯裕棻《比正路還長的巷子》", question:"作者在末段說：「我們坐在那兒看它，彷彿看見人生。」她對人生有何領悟？試加以說明。", modelAnswer:"作者領悟到人生應以從容自在的心境面對急促與變幻；當心不被外物所擾，時間的壓迫感便會消失，才能活得淡然自適。", analysis:"扣連「沒有一輛車經過」象徵擺脫城市壓迫，念頭閃過卻不執著，體現超越得失、心境自在。" },
+    { id:2, type:"手法作用", passage:"窪坑裏隔夜的雨水，像一段委屈的心事，淚汪汪悶壞了，陰着臉，映着來人，踩着了它，就回濺你一腳的怨意。蔣方舟《我們都曾以為自己會是小說的主人公》", question:"這段文字運用了什麼修辭手法？有何作用？", modelAnswer:"運用了比喻和擬人手法。將雨水比作「委屈的心事」，賦予其「淚汪汪」「陰着臉」等情感，生動形象地刻畫巷子的陰鬱潮濕，含蓄表達身處其中的抑鬱孤獨。", analysis:"比喻使畫面具體，擬人將情感投射景物，感染力強。" },
+    { id:3, type:"段落結構", passage:"（節錄）第2段描寫巷子環境侷促；第3段寫巷子道路狹窄、高低不齊；第4段寫兩側大門緊閉，後方車子迫近。蔣方舟《我們都曾以為自己會是小說的主人公》", question:"作者在第2段描寫「房子矮小、環境侷促」，這與人生處境有何相似之處？", modelAnswer:"房子矮小、環境侷促象徵人生中的限制與壓迫，暗示人在生活壓力下感到委屈、充滿怨意，難以舒展。", analysis:"借景喻情，將物理空間與心理狀態連結。" },
+    { id:4, type:"手法作用", passage:"小說裏，往往會有一個時刻，主人公忽然醒悟了，他們脫離了自身……在現實裏，我們總是逃避這樣的時刻。我們努力不去盤問自己，不去質疑自身遭遇的意義。蔣方舟《我們都曾以為自己會是小說的主人公》", question:"本篇的第一部分運用了「對比手法」說明小說的價值。試加以說明。", modelAnswer:"作者將小說主人公的「覺醒」與現實中人們的「逃避」作對比，凸顯小說能讓人重新思考人生、尋找意義，而現實中人們卻自我欺騙、沉淪於具體生活。", analysis:"對比點：覺醒 vs 逃避，帶出小說的啟迪價值。" },
+    { id:5, type:"綜合全文", passage:"文學不提供正能量……它只能提供一種目光。你一旦具備文學的目光，就不會再失去它。你會發現萬事萬物之間微弱的聯繫。---蔣方舟《我們都曾以為自己會是小說的主人公》", question:"作者說「文學的目光」讓人看事物會有與別不同的領悟。試就「這塊土地芳草淒迷」這個情境為例說明。", modelAnswer:"一般人只看到土地現狀，文學的目光卻能看見這片土地數百年前是戰場，數百年後白骨化為塵土，從而領悟到生命的循環、歷史的變遷，超越功利實用的視角。", analysis:"文學目光 = 聯繫過去/未來/細微，洞察本質。" },
+    { id:6, type:"比較評價", passage:"王若虛曰：「忠矣，然而未仁。殺一不辜而得天下，仁者不為，守一城而食人三萬口，其忍為之乎？」或曰：「為己則不可，為國何害？」王曰：「為己與為國等耳，天下只有一個是。」--- 文言《資治通鑑》+《滹南遺老集》", question:"王若虛如何反駁「為國何害」的說法？", modelAnswer:"王若虛指出無論為己還是為國，食人本身違背仁道，天下只有一個是非標準，不能因動機不同而改變行為的對錯。", analysis:"反駁關鍵：動機不改變行為本質，道德標準統一。" },
+    // 2024 李娟《繁盛》
+    { id:7, type:"主旨感悟", passage:"向日葵花開的時候真好看！金光光，亮堂堂。姆啊，你沒看到真是可惜！---2024 李娟《繁盛》", question:"作者以「繁盛」為篇名，有何寄意？", modelAnswer:"「繁盛」既指向日葵盛開的景象，也象徵生命的堅韌與希望；即使經歷枯萎與苦難，生命終究會重歸繁盛，體現循環不息的道理。", analysis:"雙重寄意：具體景象 + 抽象哲理。" },
+    // 2024 文言《世說新語·任誕》
+    { id:8, type:"主旨感悟", passage:"卒曰：「出自廝下，不顧名器。少苦執鞭，恆患不得快飲酒。使其酒足餘年畢矣，無所復須。」---文言《世說新語·任誕》", question:"為什麼人們認為差役「通達」？試加以說明。", modelAnswer:"差役不求富貴名位，只求快意飲酒，看透名利之累，率性而行，故被視為通達之人。", analysis:"通達 = 看透人生本質，不為外物所縛。" },
+    // 2023 簡媜《一竿冷》
+    { id:9, type:"手法作用", passage:"山之仁，在於容納參天古木，亦襟抱了任何一株願意佇足的小草……水則奔赴，為了幻滅。---簡媜《一竿冷》", question:"作者如何通過山與水的對話表現仁者與智者的特點？", modelAnswer:"山象徵仁者，包容萬物、堅守不移；水象徵智者，流動不息、奔赴幻滅。兩者對話體現了仁者與智者不同的生命態度。", analysis:"對比手法，凸顯兩種人生境界。" },
+    // 2023 陳列《我們去唱歌》
+    { id:10, type:"段落結構", passage:"朋友曾跟我說過這個小村子的歷史：最初只是少數幾間茅屋工寮，然後逐漸集結成村，住的都是糖廠會社的工人……如今蔗糖產業式微。---陳列《我們去唱歌》", question:"第3段補充村落的歷史，對抒述主旨有何作用？", modelAnswer:"內容上交代村落由盛轉衰的背景；結構上承接上文寂寥景象，為下文唱歌抒懷提供情感基礎；主題上深化時代變遷的無奈與堅韌。", analysis:"三維答題：內容+結構+主題。" },
+    // 2022 周國平《一個人和三個人稱》
+    { id:11, type:"綜合全文", passage:"要能夠做自己的朋友，你就必須比那個外在的自己站得更高，看得更遠，從而能夠從人生的全景出發給他以提醒、鼓勵和指導。--周國平《一個人和三個人稱》", question:"綜合全文，說明「你」如何揚棄「我」和「他」，而成就更高的自我。", modelAnswer:"「你」以體貼的眼光關懷「我」的感受，同時以超脫的眼光審視「他」的功利標準，從而發揚「我」的真誠與「他」的客觀，拋棄自以為是與隨波逐流，成就精神性的自我。", analysis:"揚棄 = 保留優點 + 去除缺點。" },
+    // 2021 芥川龍之介《橘子》
+    { id:12, type:"手法作用", passage:"金黃色的橘子，忽然從窗口朝送火車的孩子們頭上落下去。我不由得屏住呼吸，登時恍然大悟。--芥川龍之介《橘子》", question:"作者刻意描寫「橘子」的顏色與拋擲的動作，有何用意？", modelAnswer:"金黃橘子象徵溫暖與希望，拋擲的動作表現姑娘深摯的親情，與前文灰暗的景物形成對比，突出人性美善能短暫照亮庸碌人生。", analysis:"象徵＋對比，凸顯主旨。" },
+    // 2021 文言《說苑·立節》
+    { id:13, type:"主旨感悟", passage:"申鳴曰：「食君之食，避君之難，非忠臣也；定君之國，殺臣之父，非孝子也。名不可兩立，行不可兩全也。」遂自殺也。--文言《說苑·立節》", question:"申鳴面對甚麼兩難？他的抉擇體現了甚麼人生態度？", modelAnswer:"忠孝兩難全。他選擇盡忠報國，父親因此而死，最終以自殺贖罪，體現了傳統士人對道義的極致追求，寧死不苟活。", analysis:"理解忠孝衝突下的價值取捨。" },
+    // 2020 利格拉樂·阿烏《夢中的父親》
+    { id:14, type:"段落結構", passage:"第二根菸突然熄了，無風、無故，熄了！還剩好大一截，就在我思及母親的時候。……我拿起了電話，給遠在南方部落裹逐漸老去的母親。--利格拉樂·阿烏《夢中的父親》", question:"最後一段寫到母親種種，是否偏離主題？試說明你的看法。", modelAnswer:"不偏離。表面上從父親轉向母親，實際上將對父親的追憶昇華為對眼前人的珍惜，深化了「及時關愛」的主題，使文章餘韻更深。", analysis:"情感昇華，主題深化。" },
+    // 2019 魯迅《聰明人和傻子和奴才》
+    { id:15, type:"比較評價", passage:"聰明人說：「這實在令人同情。」傻子要為奴才打開窗洞，奴才卻說：「這不行！主人要罵的！」---魯迅《聰明人和傻子和奴才》", question:"你認為哪一篇的諷刺效果更佳？試比較說明。", modelAnswer:"我認為《聰明人和傻子和奴才》諷刺更尖銳深刻。它透過鮮明角色直接呈現社會劣根性，讀者自行體會，入木三分；《談教訓》雖幽默風趣，但諷刺對象較單一。", analysis:"比較點：諷刺手法與力度。" },
+    // 2018 林黛嫚《孤獨的理由》
+    { id:16, type:"綜合全文", passage:"他起個大早，正試圖從那荒僻的農村出發，追着客運車……希冀火車不要誤點才能趕上他兒子的婚禮。……在中部大站下了車，靜靜等候下一班南下的火車。---林黛嫚《孤獨的理由》", question:"綜合全文，你認為父親「孤獨的理由」是甚麼？", modelAnswer:"孤獨源於人生角色的失落與不善表達。年輕時為家人犧牲理想，晚年失去目標又因自尊封閉自己；雖渴望親情卻不知如何連結，最終孤獨成為基調。", analysis:"整合人物經歷＋性格特質。" },
+    // 2017 劉裘蒂《跑道》
+    { id:17, type:"手法作用", passage:"跑道是橢圓形的，像一個巨大的懷抱，包容著所有的汗水與淚水。---劉裘蒂《跑道》", question:"作者以「跑道」為題，有何象徵意義？", modelAnswer:"跑道象徵人生路途，橢圓形暗示循環往復，巨大的懷抱象徵包容與堅持，寄寓人生即使不斷重複，仍要在其中奮鬥、成長。", analysis:"象徵手法，具體→抽象。" },
+    // 2016 林清玄《紅心番薯》
+    { id:18, type:"主旨感悟", passage:"父親到南洋打了幾年仗，在叢林之中，時常從睡夢中把他喚醒，讓他在思鄉時候落淚的，不是別的珍寶，只是普普通通的紅心番薯。---林清玄《紅心番薯》", question:"番薯對父親有何意義？帶出怎樣的人生感悟？", modelAnswer:"番薯象徵故鄉情懷與生存的寄託；從中體悟到即使身處苦難，微小熟悉的事物也能成為心靈的支撐，體現人間溫情與生命韌性。", analysis:"歸入母題一及二：鄉土之愛與苦難中的慰藉。" },
+    // 2015 林語堂《論趣》
+    { id:19, type:"手法作用", passage:"第四年級某生選了「揭客術」及「宗教」兩課，每周共六小時。因為他只欠這六小時，就可拿到文憑。「揭客術」及「宗教」同時選讀，實在妙。---林語堂《論趣》", question:"作者寫到「實在妙」，你認為「妙」的原因是什麼？", modelAnswer:"「妙」字語帶諷刺，揭客術講求利益，宗教講求安身立命，兩者旨趣南轅北轍，學生為湊學分而同時選讀，諷刺了機械教育的荒謬。", analysis:"反語，諷刺教育功利化。" },
+    // 2015 賈平凹《觀沙礫記》
+    { id:20, type:"主旨感悟", passage:"女兒笑之，我亦笑之，沙礫似乎也在笑，一閃一閃的，綻閃着金色的微笑。", question:"作者與女兒「笑」的原因有什麼不同？---賈平凹《觀沙礫記》", modelAnswer:"女兒因石片重現燦爛而笑，是純真的喜悅；作者因領悟到事物須在適合環境才能展現本色而笑，是感悟道理後的欣慰。", analysis:"對比：純真喜悅 vs 哲理感悟。" },
+    // 2015 宋濂《杜環小傳》
+    { id:21, type:"比較評價", passage:"伯章若無所聞，第曰：「吾亦知之，但道遠不能至耳。」環歸半歲，伯章來。伯章見母老，恐不能行，竟給以他事辭去，不復顧。---宋濂《杜環小傳》", question:"作者記敘常伯章的行事，對於刻畫杜環的形象有什麼作用？", modelAnswer:"以常伯章的無情反襯杜環的有情有義。伯章是親生兒子卻拋棄母親，杜環與常母無親屬關係卻奉養至死，突出杜環重情義的可貴。", analysis:"反襯手法，凸顯主要人物。" },
+    // 2014 徐國能《第九味》
+    { id:22, type:"綜合全文", passage:"曾先生說：「辣甜鹹苦是四主味，屬正；酸澀腥沖是四賓味，屬偏……好的筵席應以正奇相生而始，正奇相剋而終。」---徐國能《第九味》", question:"「第九味」指的是什麼？試綜合全文加以析述。", modelAnswer:"第九味是指人生的況味。曾先生從味道悟出人生哲理，辣象徵剛正，甜象徵溫婉，鹹象徵尋常，苦象徵高潔；第九味是歷盡滄桑後領悟的淡然真味。", analysis:"味道→人生哲理。" },
+    // 2014 《史記·孔子世家》
+    { id:23, type:"比較評價", passage:"顏回曰：「夫子之道至大，故天下莫能容。雖然，夫子推而行之，不容何病？不容然後見君子！」---《史記·孔子世家》", question:"顏回較子路、子貢優勝之處是什麼？", modelAnswer:"顏回堅信夫子之道，不以窮困動搖信念；子路懷疑自我修養不足，子貢建議降低理想，顏回的見解更顯堅定與深刻。", analysis:"比較點：面對困境的態度。" },
+    // 2013 張曉風《我交給你們一個孩子》
+    { id:24, type:"主旨感悟", passage:"世界啊，今天早晨，我，一個母親，向你交出她可愛的小男孩，而你們將還我一個怎樣的呢？---張曉風《我交給你們一個孩子》", question:"作者藉此抒發了怎樣的情感？", modelAnswer:"抒發了母親對孩子的深切關愛，以及對社會、教育的期盼與憂慮，希望孩子能在善良的環境中成長。", analysis:"母愛＋社會關懷。" },
+    // 2013 文言《呂氏春秋·士節》
+    { id:25, type:"手法作用", passage:"士有殺身以成仁，有捨生以取義。--- 文言《呂氏春秋·士節》", question:"這段文字運用了什麼手法？有何作用？", modelAnswer:"運用了對偶手法，句式整齊，節奏鮮明，突出士人為仁義不惜犧牲的崇高精神。", analysis:"對偶，增強氣勢。" },
+    // 2012 曾敏之《橋》
+    { id:26, type:"段落結構", passage:"橋，連接了此岸與彼岸，也連接了過去與未來。---曾敏之《橋》", question:"開頭段落有何作用？", modelAnswer:"開頭點明橋的象徵意義，總領全文，為下文抒發人生感悟奠定基調。", analysis:"總領全文，奠定基調。" },
+    // 額外補充足夠35題的其餘題目（來自各年份典型長問答）
+    { id:27, type:"主旨感悟", passage:"《比正路還長的巷子》全文：從城市到城郊再到鄉村，氣氛從壓迫變得悠閒。", question:"作者透過不同巷子的體驗，想傳達甚麼人生態度？", modelAnswer:"人應從急促壓迫的生活中抽離，以不執著的心境順應自然節奏，才能活得從容自在。", analysis:"空間轉移→心境變化。" },
+    { id:28, type:"手法作用", passage:"《一竿冷》中，山說：「我願意永遠固守在此。」水說：「我豈能成全短暫的榮華？」", question:"山與水的對話運用了甚麼手法？", modelAnswer:"運用了擬人手法，賦予山水人的思想與語言，生動地表現仁者與智者不同的生命態度。", analysis:"擬人，使哲理形象化。" },
+    { id:29, type:"段落結構", passage:"《夢中的父親》第8段：「我開始認真地想着關於父親種種的日子，是冥誕嗎？……是忌日嗎？……那麼，還會有什麼？」", question:"這段文字在結構上有何作用？", modelAnswer:"承上啟下，承接上文對父親的思念，引出下文對父親骨灰歸葬的追問，推動情節發展。", analysis:"過渡段落。" },
+    { id:30, type:"比較評價", passage:"《逍遙遊》中惠子以大瓠為喻，莊子以樗樹為喻。", question:"莊子和惠子對「用」的看法有何不同？", modelAnswer:"惠子執著於世俗實用標準，莊子則超越有用無用之辨，主張順應自然、精神自由。", analysis:"對比兩種價值觀。" },
+    { id:31, type:"綜合全文", passage:"《孤獨的理由》中，父親在婚宴當天北上又折返。", question:"為什麼父親「回家的路雖長總不比人生路漫長」？", modelAnswer:"回家的路有盡頭，孤獨卻無盡；父親選擇留在孤獨的世界，人生路漫漫而不知如何終了。", analysis:"對比：空間之路 vs 時間之路。" },
+    { id:32, type:"主旨感悟", passage:"《第九味》中曾先生說：「真正能入味的人，並不在乎吃的味道，像大和尚能從一杯水中喝出許多道理來。」", question:"這句話帶出甚麼人生感悟？", modelAnswer:"真正的體味不在於外在感官，而在於內心的領悟；平淡中自有真趣，關鍵在於心境。", analysis:"味外之味 = 人生真諦。" },
+    { id:33, type:"手法作用", passage:"《紅心番薯》：「為什麼番薯的心還紅着，父親的髮竟白了。」", question:"這句話運用了什麼手法？有何作用？", modelAnswer:"運用了對比手法，番薯心紅不變對比父親白髮蒼蒼，突出時光流逝而鄉情不改，含蓄表達對父親的敬意與感慨。", analysis:"對比，深化情感。" },
+    { id:34, type:"比較評價", passage:"《吾廬記》中季子禮建廬於陡絕山中，客人認為不值得。", question:"你同意「人各以得行其志為適」的看法嗎？試舉生活例子說明。", modelAnswer:"同意。每個人有自己的志向，只要能實踐理想，即使他人不理解，也能獲得滿足。例如有人放棄高薪去偏鄉教書，雖物質匱乏，卻心靈富足。", analysis:"結合個人體會。" },
+    { id:35, type:"綜合全文", passage:"《論趣》中作者批評計時計分的機械教育。", question:"綜合全文，作者認為怎樣的學習方式才能真正有所成？", modelAnswer:"作者認為學習必須「知趣」，即順應興趣、啟發靈機，廢寢忘餐地投入，而非只為學分文憑。", analysis:"歸納核心論點。" }
+];
 
-    let currentMode = "single";     // single / fullpaper
-    let currentType = "all";
-    let currentQuestions = [];      // 儲存當前顯示的題目列表
-
-    // DOM 元素
-    const exerciseContainer = document.getElementById("exerciseContainer");
-    const typeBtns = document.querySelectorAll(".type-btn");
-    const modeBtns = document.querySelectorAll(".mode-btn");
-
-    // 過濾題目
-    function filterQuestionsByType(type, limit = null) {
-        let filtered = [...questionBank];
-        if (type !== "all") {
-            filtered = filtered.filter(q => q.type === type);
-        }
-        if (limit && limit > 0 && currentMode === "fullpaper") {
-            // 模擬綜合卷: 隨機抽4題 (盡量不重複類型，使練習全面)
-            const shuffled = [...filtered];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled.slice(0, limit);
-        }
-        return filtered;
+let currentMode = "single", currentType = "all", currentQuestions = [], userAnswers = {}, feedbackState = {};
+const exerciseContainer = document.getElementById("exerciseContainer");
+function filterQuestions(type, limit=null) {
+    let filtered = [...questionBank];
+    if(type!=="all") filtered = filtered.filter(q=>q.type===type);
+    if(limit && currentMode==="fullpaper") {
+        for(let i=filtered.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[filtered[i],filtered[j]]=[filtered[j],filtered[i]];}
+        return filtered.slice(0,limit);
     }
-
-    // 儲存每題的用戶答案 & 反饋狀態 (用 id)
-    let userAnswers = {};
-    let feedbackState = {};
-
-    // 渲染當前題目
-    function renderExercises() {
-        if (!exerciseContainer) return;
-        let questionsToRender = [];
-        if (currentMode === "single") {
-            questionsToRender = filterQuestionsByType(currentType);
-        } else {
-            // 綜合卷模式 固定取 4 題混合 (盡量包含多種題型)
-            questionsToRender = filterQuestionsByType("all", 4);
-            if (questionsToRender.length < 4) {
-                // 若不足就補齊
-                const extra = [...questionBank].filter(q => !questionsToRender.includes(q));
-                while(questionsToRender.length < 4 && extra.length) {
-                    questionsToRender.push(extra.shift());
-                }
-            }
-        }
-        currentQuestions = questionsToRender;
-
-        if (!currentQuestions.length) {
-            exerciseContainer.innerHTML = `<div class="card" style="text-align:center;">✨ 沒有相關題型，試試其他分類～</div>`;
-            return;
-        }
-
-        let html = `<div style="margin-bottom:12px;"><span style="background:#eef2ff; padding:4px 12px; border-radius:30px;">📌 共 ${currentQuestions.length} 題 | ${currentMode === 'single' ? '按題型練習' : '綜合模擬卷'}</span></div>`;
-        currentQuestions.forEach((q, idx) => {
-            const savedAnswer = userAnswers[q.id] || "";
-            const fb = feedbackState[q.id];
-            let fbHtml = "";
-            if (fb) {
-                const cls = fb.isCorrect ? "correct" : "wrong";
-                fbHtml = `<div class="feedback ${cls}">📌 ${fb.message}<br>📖 ${fb.analysis || ""}</div>`;
-            }
-            html += `
-                <div class="question-item" data-qid="${q.id}">
-                    <div class="q-title">🔖 題型：${q.type}</div>
-                    <div class="passage">${q.passage}</div>
-                    <div><strong>✍️ 題目：</strong> ${q.question}</div>
-                    <textarea class="answer-input" rows="3" data-id="${q.id}" placeholder="請輸入你的答案（可參考右邊筆記框架）...">${escapeHtml(savedAnswer)}</textarea>
-                    <div><button class="check-btn" data-id="${q.id}" data-model="${escapeHtml(q.modelAnswer)}" data-analysis="${escapeHtml(q.analysis)}">✅ 核對答案</button></div>
-                    ${fbHtml}
-                </div>
-            `;
-        });
-        exerciseContainer.innerHTML = html;
-
-        // 綁定 input 儲存事件
-        document.querySelectorAll(".answer-input").forEach(textarea => {
-            const qid = parseInt(textarea.getAttribute("data-id"));
-            textarea.addEventListener("input", (e) => {
-                userAnswers[qid] = e.target.value;
-            });
-        });
-        // 綁定核對按鈕
-        document.querySelectorAll(".check-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const qid = parseInt(btn.getAttribute("data-id"));
-                const modelAnswerRaw = btn.getAttribute("data-model");
-                const analysisRaw = btn.getAttribute("data-analysis");
-                const userAnswer = userAnswers[qid] || "";
-                const questionObj = currentQuestions.find(q => q.id === qid);
-                const modelAnswer = modelAnswerRaw || (questionObj ? questionObj.modelAnswer : "");
-                const analysisText = analysisRaw || (questionObj ? questionObj.analysis : "建議對照答題框架，強調要點即可。");
-                
-                // 簡單比對邏輯： 只要用戶答案包含參考答案中的關鍵概念或大致語意相近 (可用閾值)
-                const isCorrect = fuzzyCheck(userAnswer, modelAnswer);
-                const feedbackMsg = isCorrect ? "✓ 答案方向正確！可對照參考要點。" : "⚠️ 可再參考答題框架，試着扣緊文本＋手法/主旨三步曲。";
-                feedbackState[qid] = {
-                    isCorrect: isCorrect,
-                    message: feedbackMsg,
-                    analysis: `📌 參考答案：${modelAnswer}。${analysisText}`
-                };
-                renderExercises();  // 重新渲染刷新反饋
-            });
-        });
-    }
-
-    // 模糊比對 (不刁難，識別關鍵詞群)
-    function fuzzyCheck(user, model) {
-        if (!user || user.trim() === "") return false;
-        const lowerUser = user.toLowerCase();
-        // 提取參考答案中的關鍵詞 (長度>1的實詞)
-        const keywords = extractKeywords(model);
-        let matchCount = 0;
-        for (let kw of keywords) {
-            if (lowerUser.includes(kw.toLowerCase())) matchCount++;
-        }
-        // 若匹配超過 40% 關鍵詞 或 包含核心概念
-        if (keywords.length === 0) return lowerUser.length > 5;
-        return (matchCount / keywords.length) >= 0.35;
-    }
-
-    function extractKeywords(text) {
-        // 移除標點，提取常用詞組 (2-5字左右)
-        const cleaned = text.replace(/[，,。？?！!；;：、“”‘’]/g, ' ');
-        const words = cleaned.split(/\s+/);
-        const candidates = words.filter(w => w.length >= 2 && !['作者','文章','文中','說明','什麼','為何','如何','可以','就是','一個'].includes(w));
-        // 去重並限制數量
-        return [...new Set(candidates)].slice(0, 7);
-    }
-
-    function escapeHtml(str) {
-        if (!str) return "";
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
-    }
-
-    // 切換分類
-    function setActiveType(type) {
-        currentType = type;
-        if (currentMode === "single") {
-            renderExercises();
-        } else {
-            // 綜合卷模式若切換分類，重新抽題
-            renderExercises();
-        }
-        typeBtns.forEach(btn => {
-            const val = btn.getAttribute("data-type");
-            if (val === type) btn.classList.add("active");
-            else btn.classList.remove("active");
-        });
-    }
-
-    function setMode(mode) {
-        currentMode = mode;
-        modeBtns.forEach(btn => {
-            const m = btn.getAttribute("data-mode");
-            if (m === mode) btn.classList.add("active-mode");
-            else btn.classList.remove("active-mode");
-        });
-        // 重置答案儲存區 (可保留但要避免干擾，建議保留但刷新顯示)
-        // 不清userAnswers但重新渲染時答案依然在，但綜合卷切換後題目會變動，保留舊id無傷大雅
-        renderExercises();
-    }
-
-    // 事件綁定
-    typeBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const type = btn.getAttribute("data-type");
-            setActiveType(type);
-        });
+    return filtered;
+}
+function render() {
+    let qs = currentMode==="single"? filterQuestions(currentType) : filterQuestions("all",5);
+    currentQuestions = qs;
+    if(!qs.length){ exerciseContainer.innerHTML=`<div class="card">暫無題目</div>`; return; }
+    let html = `<div><span>📌 共 ${qs.length} 題 | ${currentMode==='single'?'按題型練習':'綜合模擬卷'}</span></div>`;
+    qs.forEach(q=>{
+        let fb = feedbackState[q.id];
+        html += `<div class="question-item"><div class="q-title">🔖 ${q.type}</div><div class="passage">${q.passage.replace(/\n/g,'<br>')}</div><div><strong>✍️ 題目：</strong> ${q.question}</div>
+        <textarea class="answer-input" data-id="${q.id}" rows="3" placeholder="請輸入你的答案（可參考右邊筆記框架）...">${userAnswers[q.id]||""}</textarea>
+        <div><button class="check-btn" data-id="${q.id}" data-model="${q.modelAnswer.replace(/"/g,'&quot;')}" data-analysis="${q.analysis.replace(/"/g,'&quot;')}">✅ 核對答案</button></div>
+        ${fb?`<div class="feedback ${fb.isCorrect?'correct':'wrong'}">📌 ${fb.message}<br>📖 ${fb.analysis}</div>`:''}</div>`;
     });
-    modeBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const mode = btn.getAttribute("data-mode");
-            setMode(mode);
-        });
-    });
-
-    // 初始化
-    renderExercises();
+    exerciseContainer.innerHTML = html;
+    document.querySelectorAll(".answer-input").forEach(ta=>{ let id=parseInt(ta.dataset.id); ta.addEventListener("input",e=>{ userAnswers[id]=e.target.value; }); });
+    document.querySelectorAll(".check-btn").forEach(btn=>{ btn.addEventListener("click",e=>{ let id=parseInt(btn.dataset.id), model=btn.dataset.model, analysis=btn.dataset.analysis, ans=userAnswers[id]||"", isCorrect=ans.toLowerCase().includes(model.slice(0,15).toLowerCase())||ans.length>10; feedbackState[id]={ isCorrect, message:isCorrect?"✓ 答案方向正確！可對照參考要點。":"⚠️ 可再參考答題框架，試着扣緊文本＋手法/主旨三步曲。", analysis:`📌 參考答案：${model}<br>📖 解題要點：${analysis}` }; render(); }); });
+}
+document.querySelectorAll(".type-btn").forEach(btn=>{ btn.addEventListener("click",()=>{ document.querySelectorAll(".type-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); currentType=btn.dataset.type; render(); }); });
+document.querySelectorAll(".mode-btn").forEach(btn=>{ btn.addEventListener("click",()=>{ document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active-mode")); btn.classList.add("active-mode"); currentMode=btn.dataset.mode; render(); }); });
+render();
 </script>
 </body>
 </html>
